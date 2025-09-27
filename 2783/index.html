@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Rápida - Estimulador Muscular</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '⚡';
+            font-size: 60px;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            opacity: 0.3;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .left-panel {
+            background: #f8fafc;
+            padding: 30px;
+        }
+        
+        .right-panel {
+            background: white;
+            padding: 30px;
+        }
+        
+        .spec-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .spec-box h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .spec-item strong {
+            color: #ffd700;
+        }
+        
+        .steps-container h2 {
+            color: #4c1d95;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .step {
+            background: white;
+            border: 2px solid #e0e7ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .step h4 {
+            color: #4c1d95;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            margin-left: 50px;
+        }
+        
+        .step-content {
+            margin-left: 20px;
+        }
+        
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #6b46c1;
+        }
+        
+        .step-list li::before {
+            content: '✓';
+            background: #8b5cf6;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fef2f2, #fecaca);
+            border-left: 5px solid #dc2626;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .warning-box h4 {
+            color: #7f1d1d;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .warning-box ul {
+            color: #7f1d1d;
+            margin-left: 20px;
+        }
+        
+        .electrode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .electrode-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .electrode-card h5 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .electrode-card p {
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .electrode-size {
+            background: #c7d2fe;
+            color: #4c1d95;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.8em;
+            margin-top: 8px;
+            display: inline-block;
+        }
+        
+        .program-section {
+            background: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+            border: 2px solid #8b5cf6;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .program-section h3 {
+            color: #4c1d95;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .program-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #4c1d95;
+            font-weight: 500;
+        }
+        
+        .battery-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .battery-section h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .intensity-highlight {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .footer {
+            background: #4c1d95;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #c4b5fd;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            color: #a78bfa;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .electrode-grid, .program-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header::before {
+                display: none;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .guide-container {
+                box-shadow: none;
+            }
+            
+            .step:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="header">
+            <h1>ESTIMULADOR MUSCULAR</h1>
+            <div class="subtitle">COMPEX SP 4.0 PROFESIONAL</div>
+        </div>
+        
+        <div class="content">
+            <div class="left-panel">
+                <div class="spec-box">
+                    <h3>⚙️ Especificaciones Técnicas</h3>
+                    <div class="spec-item">
+                        <span>Canales:</span>
+                        <strong>4 independientes</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Intensidad máxima:</span>
+                        <strong>120 mA</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Forma de impulso:</span>
+                        <strong>Rectangular compensada</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Amplitud:</span>
+                        <strong>60-400 μs</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Frecuencia:</span>
+                        <strong>1-150 Hz</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Batería:</span>
+                        <strong>NiMH 4.8V recargable</strong>
+                    </div>
+                </div>
+                
+                <div class="intensity-highlight">
+                    ⚡ INTENSIDAD MÁXIMA: 120 mA
+                </div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ PRECAUCIONES CRÍTICAS</h4>
+                    <ul>
+                        <li>Verificar integridad de electrodos antes del uso</li>
+                        <li>NO usar en pacientes con marcapasos</li>
+                        <li>Conectar PRIMERO electrodos, LUEGO cables</li>
+                        <li>Iniciar siempre con intensidad CERO</li>
+                        <li>Verificar impedancia de contacto</li>
+                    </ul>
+                </div>
+                
+                <div class="electrode-grid">
+                    <div class="electrode-card">
+                        <h5>Electrodos Pequeños</h5>
+                        <div class="electrode-size">5×5 cm</div>
+                        <p>Zonas precisas<br>Músculos pequeños<br>Puntos motores</p>
+                    </div>
+                    <div class="electrode-card">
+                        <h5>Electrodos Grandes</h5>
+                        <div class="electrode-size">5×10 cm</div>
+                        <p>Músculos grandes<br>Mayor área<br>Distribución uniforme</p>
+                    </div>
+                </div>
+                
+                <div class="program-section">
+                    <h3>🎯 Programas Disponibles</h3>
+                    <div class="program-grid">
+                        <div class="program-item">Fortalecimiento</div>
+                        <div class="program-item">Resistencia</div>
+                        <div class="program-item">Recuperación</div>
+                        <div class="program-item">Masaje</div>
+                        <div class="program-item">TENS (Dolor)</div>
+                        <div class="program-item">Capilarización</div>
+                        <div class="program-item">Calentamiento</div>
+                        <div class="program-item">Pre-competición</div>
+                    </div>
+                </div>
+                
+                <div class="battery-section">
+                    <h3>🔋 Gestión de Batería</h3>
+                    <ul class="step-list">
+                        <li>Carga inicial: 12 horas antes del primer uso</li>
+                        <li>Ciclo recuperación: 2 minutos entre sesiones</li>
+                        <li>Almacenamiento: Retirar si >6 meses sin uso</li>
+                        <li>Indicador: Monitorear nivel durante tratamiento</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="steps-container">
+                    <h2>📋 Procedimiento Operativo</h2>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Configuración del Equipo</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Insertar batería con etiqueta hacia arriba</li>
+                                <li>Conectar cables a 4 tomas frontales</li>
+                                <li>Configurar idioma, contraste, volumen</li>
+                                <li>Verificar nivel de batería suficiente</li>
+                                <li>Preparar electrodos apropiados</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Preparación del Paciente</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Limpiar área de aplicación con alcohol</li>
+                                <li>Secar completamente la piel</li>
+                                <li>Explicar sensaciones que experimentará</li>
+                                <li>Verificar ausencia de contraindicaciones</li>
+                                <li>Posicionar cómodamente al paciente</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Colocación de Electrodos</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Seleccionar tamaño apropiado (5×5 o 5×10 cm)</li>
+                                <li>Colocar longitudinalmente sobre fibras musculares</li>
+                                <li>Conectar snap directamente a cables</li>
+                                <li>Verificar adherencia completa sin burbujas</li>
+                                <li>Asegurar distancia mínima entre electrodos</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>Programación y Ejecución</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Seleccionar categoría con botón ON/OFF → Canal 1</li>
+                                <li>Elegir programa específico según objetivo</li>
+                                <li>Ejecutar MI-Scan automático si disponible</li>
+                                <li>Ajustar intensidades con botones +/- por canal</li>
+                                <li>Iniciar automáticamente tras configurar</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h4>Monitoreo y Finalización</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Monitorear respuesta del paciente continuamente</li>
+                                <li>Ajustar intensidad según tolerancia</li>
+                                <li>Reducir intensidad a CERO antes de desconectar</li>
+                                <li>Desconectar cables del equipo ANTES que del paciente</li>
+                                <li>Limpiar electrodos y cables con alcohol</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <h4>Troubleshooting Rápido</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li><strong>Fallo electrodo:</strong> Verificar conexión, reemplazar</li>
+                                <li><strong>Estimulación incorrecta:</strong> Revisar posición</li>
+                                <li><strong>Batería descargada:</strong> Cargar hasta 12h</li>
+                                <li><strong>Molestia excesiva:</strong> Reposicionar electrodos</li>
+                                <li><strong>Sin respuesta:</strong> Verificar MI-Scan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Manual Oficial:</strong> 
+                <a href="https://s3.amazonaws.com/assets.compex.com/uk/support-documents/Compex-Instruction-for-use-sp2.0-sp4.0-fit1.0-fit3.0-EN.pdf" target="_blank">
+                    Descargar Manual Técnico Completo
+                </a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                Cumple estándares IEC 601-2-10 • Revisión: Enero 2025
+            </p>
+        </div>
+    </div>
+</body>
+</html>

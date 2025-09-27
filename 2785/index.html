@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Rápida - Lámpara de Hendidura</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '👁️';
+            font-size: 60px;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            opacity: 0.3;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .left-panel {
+            background: #f0f9ff;
+            padding: 30px;
+        }
+        
+        .right-panel {
+            background: white;
+            padding: 30px;
+        }
+        
+        .spec-box {
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .spec-box h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .spec-item strong {
+            color: #ffd700;
+        }
+        
+        .steps-container h2 {
+            color: #0c4a6e;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .step {
+            background: white;
+            border: 2px solid #bae6fd;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #0891b2;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .step h4 {
+            color: #0c4a6e;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            margin-left: 50px;
+        }
+        
+        .step-content {
+            margin-left: 20px;
+        }
+        
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #075985;
+        }
+        
+        .step-list li::before {
+            content: '✓';
+            background: #0284c7;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fef2f2, #fecaca);
+            border-left: 5px solid #dc2626;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .warning-box h4 {
+            color: #7f1d1d;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .warning-box ul {
+            color: #7f1d1d;
+            margin-left: 20px;
+        }
+        
+        .magnification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .mag-card {
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .filters-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .filters-section h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .filter-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #92400e;
+            font-weight: 500;
+            border: 1px solid #f59e0b;
+        }
+        
+        .technique-section {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            border: 2px solid #6366f1;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .technique-section h3 {
+            color: #3730a3;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .technique-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .technique-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9em;
+            color: #3730a3;
+        }
+        
+        .technique-list li::before {
+            content: '🔍';
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .safety-highlight {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .cleaning-section {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .cleaning-section h3 {
+            color: #064e3b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer {
+            background: #0c4a6e;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #7dd3fc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            color: #38bdf8;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .magnification-grid, .filter-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header::before {
+                display: none;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .guide-container {
+                box-shadow: none;
+            }
+            
+            .step:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="header">
+            <h1>LÁMPARA DE HENDIDURA</h1>
+            <div class="subtitle">TOPCON SL-D7 DIGITAL SLIT LAMP</div>
+        </div>
+        
+        <div class="content">
+            <div class="left-panel">
+                <div class="spec-box">
+                    <h3>👁️ Especificaciones Técnicas</h3>
+                    <div class="spec-item">
+                        <span>Microscopio:</span>
+                        <strong>Galileo convergente binocular</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Magnificaciones:</span>
+                        <strong>6×, 10×, 16×, 25×, 40×</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Iluminación:</span>
+                        <strong>Halógena 12V/30W</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Ancho hendidura:</span>
+                        <strong>0-9mm continuo</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Rotación hendidura:</span>
+                        <strong>±180° con escala</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Distancia pupilar:</span>
+                        <strong>55-78mm</strong>
+                    </div>
+                </div>
+                
+                <div class="magnification-grid">
+                    <div class="mag-card">6×</div>
+                    <div class="mag-card">10×</div>
+                    <div class="mag-card">16×</div>
+                    <div class="mag-card">25×</div>
+                    <div class="mag-card">40×</div>
+                </div>
+                
+                <div class="safety-highlight">
+                    ⚠️ LÍMITE SEGURIDAD: Máximo 13 min con lente 90D
+                </div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ PRECAUCIONES OFTÁLMICAS</h4>
+                    <ul>
+                        <li>Desinfectar apoyos entre cada paciente</li>
+                        <li>Verificar fusibles F1, F2 antes de uso</li>
+                        <li>NO tocar superficie de espejos</li>
+                        <li>Limitar tiempo de exposición</li>
+                        <li>Verificar alineación óptica</li>
+                    </ul>
+                </div>
+                
+                <div class="filters-section">
+                    <h3>🔴 Filtros Especializados</h3>
+                    <div class="filter-grid">
+                        <div class="filter-item">Filtro Azul<br><small>Fluoresceína</small></div>
+                        <div class="filter-item">Rojo Libre<br><small>Fibras nerviosas</small></div>
+                        <div class="filter-item">Densidad Neutra<br><small>Reducir intensidad</small></div>
+                        <div class="filter-item">UV Cut<br><small>Protección</small></div>
+                        <div class="filter-item">IR Cut<br><small>Filtro térmico</small></div>
+                    </div>
+                </div>
+                
+                <div class="technique-section">
+                    <h3>🔍 Técnicas de Examinación</h3>
+                    <ul class="technique-list">
+                        <li><strong>Iluminación directa:</strong> Hendidura 0.5-2mm, ángulo 30-45°</li>
+                        <li><strong>Iluminación indirecta:</strong> Hendidura 1-3mm, descentrada 45-60°</li>
+                        <li><strong>Retroiluminación:</strong> Hendidura amplia, enfoque en iris</li>
+                        <li><strong>Dispersión escleral:</strong> Hendidura estrecha, paralela al limbo</li>
+                    </ul>
+                </div>
+                
+                <div class="cleaning-section">
+                    <h3>🧼 Mantenimiento Óptico</h3>
+                    <ul class="step-list">
+                        <li>Paños sin pelusa + alcohol isopropílico 70%</li>
+                        <li>Espejo: Solo paño seco, evitar tocar</li>
+                        <li>Reemplazo lámpara: Desconectar, no tocar vidrio</li>
+                        <li>Desinfección: Partes contacto paciente obligatorio</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="steps-container">
+                    <h2>📋 Procedimiento de Examinación</h2>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Configuración Inicial</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Ajustar distancia pupilar binocular (55-78mm)</li>
+                                <li>Configurar magnificación inicial (6× o 10×)</li>
+                                <li>Verificar funcionamiento de reóstato</li>
+                                <li>Comprobar posición de filtros</li>
+                                <li>Verificar fusibles F1, F2 operativos</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Preparación del Paciente</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Desinfectar apoyos de barbilla y frente</li>
+                                <li>Ajustar altura de mentonera apropiadamente</li>
+                                <li>Posicionar cabeza del paciente correctamente</li>
+                                <li>Explicar procedimiento y sensaciones</li>
+                                <li>Verificar comodidad y estabilidad</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Examinación Básica</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Iniciar con iluminación difusa (evaluación general)</li>
+                                <li>Establecer ancho de hendidura inicial (2-3mm)</li>
+                                <li>Realizar biomicroscopía del segmento anterior</li>
+                                <li>Examinar córnea, iris, cristalino sistemáticamente</li>
+                                <li>Ajustar intensidad según estructura examinada</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>Técnicas Especializadas</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Haz de hendidura: Ancho 0.2mm (detalles) a 14mm (panorámico)</li>
+                                <li>Iluminación oblicua: Ángulo 30-60° para relieve</li>
+                                <li>Retroiluminación: Utilizar reflejo del fondo</li>
+                                <li>Iluminación especular: Superficie endotelial corneal</li>
+                                <li>Dispersión escleral: Opacidades corneales</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h4>Uso de Filtros</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Filtro azul: Examen con fluoresceína + barrera amarilla</li>
+                                <li>Filtro rojo libre: Visualización fibras nerviosas</li>
+                                <li>Densidad neutra: Reducir intensidad sin cambiar color</li>
+                                <li>Verificar posición correcta de filtros</li>
+                                <li>Documentar filtros utilizados en examen</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <h4>Finalización y Documentación</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Reducir intensidad de iluminación al mínimo</li>
+                                <li>Centrar sistema óptico en posición neutra</li>
+                                <li>Limpiar oculares y lentes frontales</li>
+                                <li>Documentar hallazgos en historia clínica</li>
+                                <li>Desinfectar todas las superficies de contacto</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Manual Oficial:</strong> 
+                <a href="http://www.frankshospitalworkshop.com/equipment/documents/ophthalmology/service_manuals/Topcon SL-D7 Slitlamp - Service manual.pdf" target="_blank">
+                    Descargar Manual Técnico Completo
+                </a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                Biomicroscopía Oftálmica • Cumple estándares ISO • Revisión: Enero 2025
+            </p>
+        </div>
+    </div>
+</body>
+</html>

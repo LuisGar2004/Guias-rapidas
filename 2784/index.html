@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Rápida - Microscopio Médico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff9a56, #ff6b35);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '🔬';
+            font-size: 60px;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            opacity: 0.3;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .left-panel {
+            background: #fff7ed;
+            padding: 30px;
+        }
+        
+        .right-panel {
+            background: white;
+            padding: 30px;
+        }
+        
+        .spec-box {
+            background: linear-gradient(135deg, #ff9a56, #ff6b35);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .spec-box h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .spec-item strong {
+            color: #ffd700;
+        }
+        
+        .steps-container h2 {
+            color: #9a3412;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .step {
+            background: white;
+            border: 2px solid #fed7aa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #ff9a56;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: linear-gradient(135deg, #ff9a56, #ff6b35);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .step h4 {
+            color: #9a3412;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            margin-left: 50px;
+        }
+        
+        .step-content {
+            margin-left: 20px;
+        }
+        
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #c2410c;
+        }
+        
+        .step-list li::before {
+            content: '✓';
+            background: #ea580c;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fef2f2, #fecaca);
+            border-left: 5px solid #dc2626;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .warning-box h4 {
+            color: #7f1d1d;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .warning-box ul {
+            color: #7f1d1d;
+            margin-left: 20px;
+        }
+        
+        .objective-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .objective-card {
+            background: linear-gradient(135deg, #ff9a56, #ff6b35);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .objective-card h5 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .objective-detail {
+            font-size: 0.85em;
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+        
+        .na-value {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8em;
+            margin-top: 8px;
+            display: inline-block;
+        }
+        
+        .kohler-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .kohler-section h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .oil-section {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border: 2px solid #3b82f6;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .oil-section h3 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .precision-highlight {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .cleaning-section {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .cleaning-section h3 {
+            color: #0c4a6e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer {
+            background: #9a3412;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #fed7aa;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            color: #fdba74;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .objective-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header::before {
+                display: none;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .guide-container {
+                box-shadow: none;
+            }
+            
+            .step:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="header">
+            <h1>MICROSCOPIO MÉDICO</h1>
+            <div class="subtitle">OLYMPUS CX41 SYSTEM MICROSCOPE</div>
+        </div>
+        
+        <div class="content">
+            <div class="left-panel">
+                <div class="spec-box">
+                    <h3>🔬 Especificaciones Técnicas</h3>
+                    <div class="spec-item">
+                        <span>Sistema óptico:</span>
+                        <strong>UIS (Universal Infinity)</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Iluminación:</span>
+                        <strong>Halógena 6V 30W</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Revólver:</span>
+                        <strong>5 posiciones</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Condensador:</span>
+                        <strong>Abbe N.A. 1.25</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Oculares:</span>
+                        <strong>12.5× ajuste ±5D</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Enfoque fino:</span>
+                        <strong>Precisión 2.5μm</strong>
+                    </div>
+                </div>
+                
+                <div class="precision-highlight">
+                    🎯 PRECISIÓN DE ENFOQUE: 2.5 μm
+                </div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ PRECAUCIONES ÓPTICAS</h4>
+                    <ul>
+                        <li>NUNCA tocar lentes con dedos</li>
+                        <li>Usar solo papel para lentes</li>
+                        <li>Limpiar aceite inmediatamente post-uso</li>
+                        <li>Mantener alejado de chispas (éter)</li>
+                        <li>Verificar parfocalidad entre objetivos</li>
+                    </ul>
+                </div>
+                
+                <div class="objective-grid">
+                    <div class="objective-card">
+                        <h5>4X</h5>
+                        <div class="objective-detail">Distancia: 18.5mm</div>
+                        <div class="objective-detail">Resolución: 3.36μm</div>
+                        <div class="na-value">N.A. 0.10</div>
+                    </div>
+                    <div class="objective-card">
+                        <h5>10X</h5>
+                        <div class="objective-detail">Distancia: 10.6mm</div>
+                        <div class="objective-detail">Resolución: 1.34μm</div>
+                        <div class="na-value">N.A. 0.25</div>
+                    </div>
+                    <div class="objective-card">
+                        <h5>40X</h5>
+                        <div class="objective-detail">Distancia: 0.6mm</div>
+                        <div class="objective-detail">Resolución: 0.52μm</div>
+                        <div class="na-value">N.A. 0.65</div>
+                    </div>
+                    <div class="objective-card">
+                        <h5>100X</h5>
+                        <div class="objective-detail">Distancia: 0.13mm</div>
+                        <div class="objective-detail">Resolución: 0.27μm</div>
+                        <div class="na-value">N.A. 1.25 (Aceite)</div>
+                    </div>
+                </div>
+                
+                <div class="kohler-section">
+                    <h3>💡 Calibración Köhler</h3>
+                    <ul class="step-list">
+                        <li>Seleccionar objetivo 10X</li>
+                        <li>Enfocar espécimen</li>
+                        <li>Centrar condensador</li>
+                        <li>Calibrar apertura al 70-80%</li>
+                    </ul>
+                </div>
+                
+                <div class="oil-section">
+                    <h3>🛢️ Aceite de Inmersión</h3>
+                    <ul class="step-list">
+                        <li>Solo para objetivo 100X</li>
+                        <li>Aplicar gota directa</li>
+                        <li>Verificar ausencia de burbujas</li>
+                        <li>Limpiar inmediatamente post-uso</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="steps-container">
+                    <h2>📋 Procedimiento Operativo</h2>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Configuración Inicial</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Montaje tubo binocular con llave Allen AF3</li>
+                                <li>Instalación de oculares hasta tope completo</li>
+                                <li>Instalación objetivos (menor magnificación primero)</li>
+                                <li>Montaje condensador con alineación correcta</li>
+                                <li>Verificar conexión eléctrica segura</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Preparación de la Muestra</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Colocar muestra en platina</li>
+                                <li>Asegurar con clips de sujeción</li>
+                                <li>Centrar área de interés</li>
+                                <li>Verificar presencia de cubreobjetos</li>
+                                <li>Ajustar distancia interpupilar (48-87mm)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Iluminación y Enfoque</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Encender microscopio (lámpara 6V 30W)</li>
+                                <li>Seleccionar objetivo 10X inicialmente</li>
+                                <li>Realizar enfoque grueso (aproximación)</li>
+                                <li>Afinar con enfoque fino (precisión 2.5μm)</li>
+                                <li>Ejecutar calibración Köhler completa</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>Cambio de Magnificaciones</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Centrar área de interés en objetivo actual</li>
+                                <li>Cambiar gradualmente a mayor magnificación</li>
+                                <li>Verificar parfocalidad entre objetivos</li>
+                                <li>Ajustar enfoque fino según sea necesario</li>
+                                <li>Para 100X: aplicar aceite de inmersión</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h4>Observación y Documentación</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Realizar observaciones sistemáticas</li>
+                                <li>Documentar hallazgos y magnificaciones</li>
+                                <li>Capturar imágenes si es necesario</li>
+                                <li>Anotar parámetros utilizados</li>
+                                <li>Verificar todas las áreas de interés</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <h4>Finalización y Limpieza</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Remover aceite de inmersión con xilol/alcohol</li>
+                                <li>Limpiar objetivos con papel para lentes</li>
+                                <li>Apagar iluminación para prolongar vida útil</li>
+                                <li>Centrar sistema óptico en posición neutra</li>
+                                <li>Cubrir microscopio con funda protectora</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cleaning-section">
+                    <h3>🧼 Protocolo de Limpieza</h3>
+                    <ul class="step-list">
+                        <li><strong>Material:</strong> Gasa sin pelusa + alcohol 70% + éter 30%</li>
+                        <li><strong>Movimiento:</strong> Circulares desde centro hacia exterior</li>
+                        <li><strong>Frecuencia:</strong> Diaria (oculares), semanal (objetivos)</li>
+                        <li><strong>Precaución:</strong> Área ventilada, alejado de chispas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Manual Oficial:</strong> 
+                <a href="http://www.frankshospitalworkshop.com/equipment/documents/microscopes/user_manuals/Olympus%20CX41%20Microscope%20Manual.pdf" target="_blank">
+                    Descargar Manual Técnico Completo
+                </a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                Sistema UIS • Cumple estándares ISO • Revisión: Enero 2025
+            </p>
+        </div>
+    </div>
+</body>
+</html>

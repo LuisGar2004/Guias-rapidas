@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Rápida - Sillón Terapéutico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '🪑';
+            font-size: 60px;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            opacity: 0.3;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .left-panel {
+            background: #f0fdf4;
+            padding: 30px;
+        }
+        
+        .right-panel {
+            background: white;
+            padding: 30px;
+        }
+        
+        .spec-box {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .spec-box h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .spec-item strong {
+            color: #ffd700;
+        }
+        
+        .steps-container h2 {
+            color: #064e3b;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .step {
+            background: white;
+            border: 2px solid #d1fae5;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #11998e;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .step h4 {
+            color: #064e3b;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            margin-left: 50px;
+        }
+        
+        .step-content {
+            margin-left: 20px;
+        }
+        
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            color: #065f46;
+        }
+        
+        .step-list li::before {
+            content: '✓';
+            background: #10b981;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-left: 5px solid #dc2626;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .warning-box h4 {
+            color: #7f1d1d;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .warning-box ul {
+            color: #7f1d1d;
+            margin-left: 20px;
+        }
+        
+        .positions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .position-card {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .position-card h5 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .position-card p {
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .safety-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid #f59e0b;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .safety-section h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .maintenance-section {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .maintenance-section h3 {
+            color: #064e3b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .capacity-highlight {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .footer {
+            background: #064e3b;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #6ee7b7;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            color: #34d399;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .positions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header::before {
+                display: none;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .guide-container {
+                box-shadow: none;
+            }
+            
+            .step:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="header">
+            <h1>SILLÓN TERAPÉUTICO</h1>
+            <div class="subtitle">MIDMARK 641 PROCEDURE CHAIR</div>
+        </div>
+        
+        <div class="content">
+            <div class="left-panel">
+                <div class="spec-box">
+                    <h3>⚙️ Especificaciones Técnicas</h3>
+                    <div class="spec-item">
+                        <span>Capacidad peso:</span>
+                        <strong>204 kg (450 lb)</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Altura asiento:</span>
+                        <strong>55.9-101.6 cm</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Inclinación asiento:</span>
+                        <strong>0° a 30°</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Rango respaldo:</span>
+                        <strong>0° a 85°</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Suministro eléctrico:</span>
+                        <strong>115/230 VAC, 50/60 Hz</strong>
+                    </div>
+                    <div class="spec-item">
+                        <span>Rotación:</span>
+                        <strong>350° (opcional)</strong>
+                    </div>
+                </div>
+                
+                <div class="capacity-highlight">
+                    ⚠️ CAPACIDAD MÁXIMA: 204 kg (450 lb)
+                </div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ PRECAUCIONES DE SEGURIDAD</h4>
+                    <ul>
+                        <li>Verificar peso del paciente antes del uso</li>
+                        <li>Comprobar fusibles antes de operar</li>
+                        <li>Usar controles suavemente</li>
+                        <li>Desinfectar entre cada paciente</li>
+                        <li>Verificar interruptores de seguridad</li>
+                    </ul>
+                </div>
+                
+                <div class="positions-grid">
+                    <div class="position-card">
+                        <h5>Semi-Fowler</h5>
+                        <p>Posición de comodidad<br>para el paciente<br>durante exámenes</p>
+                    </div>
+                    <div class="position-card">
+                        <h5>Trendelenburg</h5>
+                        <p>Tratamiento de<br>hipotensión y<br>emergencias</p>
+                    </div>
+                    <div class="position-card">
+                        <h5>Plano Elevado</h5>
+                        <p>Acceso óptimo a<br>cabeza, cuello<br>y torso</p>
+                    </div>
+                    <div class="position-card">
+                        <h5>Entrada de Silla</h5>
+                        <p>Posición baja para<br>transferencias<br>seguras</p>
+                    </div>
+                </div>
+                
+                <div class="safety-section">
+                    <h3>🛡️ Parámetros de Seguridad</h3>
+                    <ul class="step-list">
+                        <li>Superficie respaldo: 54.6 cm</li>
+                        <li>Superficie asiento: 59.4 cm</li>
+                        <li>Longitud total plana: 185.4-200.7 cm</li>
+                        <li>Consumo eléctrico: 8.5/4.5 A</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="steps-container">
+                    <h2>📋 Procedimiento Operativo</h2>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Verificación Pre-Uso</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Verificar conexión eléctrica segura</li>
+                                <li>Comprobar fusibles (1A-3A según voltaje)</li>
+                                <li>Probar controles inalámbricos (batería)</li>
+                                <li>Verificar indicadores de estado</li>
+                                <li>Comprobar interruptores de seguridad</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Preparación del Sillón</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Posicionar en "entrada de silla" (posición baja)</li>
+                                <li>Verificar superficie limpia y desinfectada</li>
+                                <li>Configurar respaldo a 0° inicial</li>
+                                <li>Preparar accesorios necesarios</li>
+                                <li>Verificar espacio libre alrededor</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Transferencia del Paciente</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Asistir al paciente en transferencia segura</li>
+                                <li>Verificar peso no exceda 204 kg</li>
+                                <li>Posicionar al paciente cómodamente</li>
+                                <li>Explicar movimientos que se realizarán</li>
+                                <li>Usar controles suavemente</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h4>Ajustes Durante Procedimiento</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Usar 4 posiciones programables disponibles</li>
+                                <li>Ajustar altura según necesidad (55.9-101.6 cm)</li>
+                                <li>Modificar respaldo (0°-85°) gradualmente</li>
+                                <li>Utilizar rotación 350° si es necesario</li>
+                                <li>Monitorear comodidad del paciente</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h4>Finalización y Limpieza</h4>
+                        <div class="step-content">
+                            <ul class="step-list">
+                                <li>Retornar a posición "entrada de silla"</li>
+                                <li>Asistir al paciente en transferencia de salida</li>
+                                <li>Limpiar con solución 10% jabón + agua</li>
+                                <li>Desinfectar con blanqueador 10% (30 min contacto)</li>
+                                <li>Verificar funcionamiento para próximo uso</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="maintenance-section">
+                    <h3>🔧 Mantenimiento Preventivo</h3>
+                    <ul class="step-list">
+                        <li><strong>Cada 6 meses:</strong> Verificar cables, probar funciones</li>
+                        <li><strong>Trimestral:</strong> Lubricar partes móviles</li>
+                        <li><strong>Mensual:</strong> Inspección completa de estructura</li>
+                        <li><strong>Evitar:</strong> Limpiadores con amoniaco en superficies pintadas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Manual Oficial:</strong> 
+                <a href="https://www.midmark.com/docs/default-source/documents/midmark-641-barrier-free-power-procedures-chair.pdf" target="_blank">
+                    Descargar Manual Técnico Completo
+                </a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                Cumple estándares ISO 13485 • Revisión: Enero 2025
+            </p>
+        </div>
+    </div>
+</body>
+</html>

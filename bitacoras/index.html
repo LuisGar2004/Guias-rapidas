@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitácora COFEPRIS - Mantenimiento Médico</title>
+    <style>
+        body {
+            font-family: 'Calibri', Arial, sans-serif;
+            font-size: 11pt;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .maintenance-type-selector {
+            background: #f8f9fa;
+            padding: 30px;
+            border-bottom: 3px solid #667eea;
+            text-align: center;
+        }
+        
+        .maintenance-type-selector h3 {
+            margin: 0 0 20px 0;
+            color: #1e3c72;
+            font-size: 18px;
+        }
+        
+        .type-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .type-btn {
+            background: white;
+            border: 3px solid #e1e5e9;
+            padding: 20px 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 200px;
+        }
+        
+        .type-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+        
+        .type-btn.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .type-btn h4 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+        
+        .type-btn p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .equipment-selector {
+            background: #f8f9fa;
+            padding: 25px;
+            border-bottom: 3px solid #667eea;
+            display: none;
+        }
+        
+        .equipment-selector h3 {
+            margin: 0 0 15px 0;
+            color: #1e3c72;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .selector-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .equipment-select {
+            flex: 1;
+            min-width: 300px;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        
+        .equipment-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .bitacora-content {
+            padding: 30px;
+            display: none;
+        }
+        
+        .word-document {
+            background: white;
+            border: 1px solid #ccc;
+            min-height: 800px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .doc-header {
+            text-align: center;
+            border-bottom: 3px solid #1e3c72;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .doc-title {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #1e3c72;
+            margin: 0;
+        }
+        
+        .doc-subtitle {
+            font-size: 12pt;
+            color: #666;
+            margin: 5px 0 0 0;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            background: #1e3c72;
+            color: white;
+            padding: 8px 15px;
+            font-weight: bold;
+            font-size: 12pt;
+            margin-bottom: 10px;
+        }
+        
+        .section-title.correctivo {
+            background: #dc3545;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .form-label {
+            font-weight: bold;
+            min-width: 120px;
+            color: #1e3c72;
+        }
+        
+        .form-input {
+            flex: 1;
+            border-bottom: 1px solid #ccc;
+            padding: 2px 5px;
+            background: #f9f9f9;
+        }
+        
+        .checklist-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        
+        .checklist-table th {
+            background: #e8f4f8;
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .checklist-table td {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            vertical-align: top;
+        }
+        
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .signature-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            text-align: center;
+            min-height: 80px;
+        }
+        
+        .signature-title {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+        
+        .equipment-info {
+            background: #fff3cd;
+            border: 1px solid #f0d000;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .falla-section {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .diagnostico-section {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        @media print {
+            body { background: white; }
+            .maintenance-type-selector, .equipment-selector, .actions { display: none; }
+            .container { box-shadow: none; border-radius: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 BITÁCORA DE MANTENIMIENTO</h1>
+            <p>Equipos Médicos Especializados - COFEPRIS</p>
+        </div>
+        
+        <!-- SELECTOR TIPO DE MANTENIMIENTO -->
+        <div class="maintenance-type-selector">
+            <h3>📋 Seleccionar Tipo de Mantenimiento</h3>
+            <div class="type-buttons">
+                <div class="type-btn" onclick="selectMaintenanceType('preventivo')">
+                    <h4>🔧 PREVENTIVO</h4>
+                    <p>Mantenimiento programado y rutinario</p>
+                </div>
+                <div class="type-btn" onclick="selectMaintenanceType('correctivo')">
+                    <h4>🚨 CORRECTIVO</h4>
+                    <p>Reparación por falla reportada</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SELECTOR DE EQUIPOS -->
+        <div class="equipment-selector" id="equipmentSelector">
+            <h3 id="selectorTitle">🔧 Seleccionar Equipo para Mantenimiento</h3>
+            <div class="selector-container">
+                <select id="equipmentSelect" class="equipment-select" onchange="loadEquipmentData()">
+                    <option value="">-- Seleccionar Equipo --</option>
+                    <option value="ultrasonido">Ultrasonido Terapéutico</option>
+                    <option value="sillon">Sillón Terapéutico</option>
+                    <option value="estimulador">Estimulador Muscular</option>
+                    <option value="microscopio">Microscopio Médico</option>
+                    <option value="lampara_hendidura">Lámpara de Hendidura</option>
+                </select>
+                <button class="generate-btn" onclick="loadEquipmentData()">📋 Cargar Formato</button>
+            </div>
+        </div>
+        
+        <!-- CONTENIDO DE LA BITÁCORA -->
+        <div class="bitacora-content" id="bitacoraContent">
+            <div id="equipmentInfo" class="equipment-info" style="display: none;">
+                <strong>📋 Equipo seleccionado:</strong> <span id="equipmentName"></span><br>
+                <strong>📍 Especialidad:</strong> <span id="equipmentSpecialty"></span><br>
+                <strong>⚠️ Clase de riesgo:</strong> <span id="equipmentRisk"></span><br>
+                <strong>🔧 Tipo de mantenimiento:</strong> <span id="maintenanceTypeDisplay"></span>
+            </div>
+            
+            <div class="word-document" id="wordDocument">
+                <div class="doc-header">
+                    <div class="doc-title" id="docTitle">BITÁCORA DE MANTENIMIENTO</div>
+                    <div class="doc-subtitle">EQUIPOS MÉDICOS - CUMPLIMIENTO COFEPRIS</div>
+                    <div class="doc-subtitle">NOM-241-SSA1-2012 • NOM-137-SSA1-2008</div>
+                </div>
+                
+                <!-- El contenido se carga dinámicamente aquí -->
+                <div id="dynamicContent">
+                    <p style="text-align: center; color: #666; font-style: italic;">
+                        Seleccione el tipo de mantenimiento y equipo para cargar el formato correspondiente
+                    </p>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="btn" onclick="printDocument()">🖨️ Imprimir</button>
+                <button class="btn btn-success" onclick="exportToWord()">📄 Exportar a Word</button>
+                <button class="btn" onclick="resetForm()">🔄 Reiniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedMaintenanceType = '';
+        let selectedEquipment = '';
+        
+        // Base de datos de equipos
+        const equipmentDatabase = {
+            ultrasonido: {
+                name: "Ultrasonido Terapéutico",
+                brand: "Chattanooga",
+                model: "Intelect Transport 2782",
+                specialty: "Fisioterapia/Rehabilitación",
+                risk: "IIA",
+                location: "Fisioterapia - Consultorio 3",
+                preventivo: {
+                    activities: [
+                        "Inspección visual externa (carcasa, cables, conectores)",
+                        "Verificación de etiquetas y registro sanitario",
+                        "Limpieza y desinfección según protocolo",
+                        "Verificación de controles y alarmas",
+                        "Pruebas de seguridad eléctrica",
+                        "Calibración de frecuencias según especificaciones",
+                        "Verificación de transductores y aplicadores",
+                        "Prueba de intensidades y modos de operación"
+                    ],
+                    measurements: [
+                        { param: "Frecuencia 1 MHz", spec: "1.00 ±5%", unit: "MHz" },
+                        { param: "Frecuencia 3.3 MHz", spec: "3.30 ±5%", unit: "MHz" },
+                        { param: "Intensidad máxima", spec: "≤ 2.5 W/cm²", unit: "W/cm²" },
+                        { param: "Corriente de fuga", spec: "≤ 0.5 mA", unit: "mA" },
+                        { param: "Resistencia tierra", spec: "≤ 0.1 Ω", unit: "Ω" }
+                    ]
+                },
+                correctivo: {
+                    commonSymptoms: [
+                        "Equipo no enciende",
+                        "Sin emisión de ultrasonido", 
+                        "Pantalla con errores",
+                        "Transductor no funciona",
+                        "Alarmas intermitentes"
+                    ],
+                    diagnosticTools: [
+                        "Multímetro digital",
+                        "Hidrofón calibrado",
+                        "Osciloscopio",
+                        "Medidor de potencia ultrasónica"
+                    ]
+                }
+            },
+            sillon: {
+                name: "Sillón Terapéutico",
+                brand: "Midmark",
+                model: "641 Procedure Chair",
+                specialty: "Consulta/Procedimientos",
+                risk: "I",
+                location: "Consultorio Oftalmología",
+                preventivo: {
+                    activities: [
+                        "Inspección visual de estructura y tapicería",
+                        "Verificación de mecanismos de ajuste",
+                        "Limpieza y desinfección completa",
+                        "Lubricación de articulaciones móviles",
+                        "Verificación de controles eléctricos",
+                        "Prueba de movimientos automáticos",
+                        "Verificación de sistema hidráulico/neumático",
+                        "Inspección de accesorios y soportes"
+                    ],
+                    measurements: [
+                        { param: "Altura mínima", spec: "≥ 48 cm", unit: "cm" },
+                        { param: "Altura máxima", spec: "≤ 98 cm", unit: "cm" },
+                        { param: "Capacidad de carga", spec: "≥ 159 kg", unit: "kg" },
+                        { param: "Tiempo elevación", spec: "≤ 15 seg", unit: "seg" }
+                    ]
+                },
+                correctivo: {
+                    commonSymptoms: [
+                        "No se eleva/baja",
+                        "Ruidos anormales",
+                        "Movimientos erráticos",
+                        "Controles no responden",
+                        "Pérdida de presión hidráulica"
+                    ],
+                    diagnosticTools: [
+                        "Manómetro de presión",
+                        "Multímetro",
+                        "Kit herramientas hidráulicas"
+                    ]
+                }
+            },
+            estimulador: {
+                name: "Estimulador Muscular",
+                brand: "Compex",
+                model: "SP 4.0 Profesional",
+                specialty: "Fisioterapia/Rehabilitación",
+                risk: "IIA",
+                location: "Fisioterapia - Área Electroterapia",
+                preventivo: {
+                    activities: [
+                        "Inspección visual del equipo y cables",
+                        "Verificación de electrodos y accesorios",
+                        "Limpieza y desinfección de superficie",
+                        "Calibración de intensidades de corriente",
+                        "Verificación de programas preestablecidos",
+                        "Prueba de seguridad eléctrica",
+                        "Verificación de batería y cargador",
+                        "Test de alarmas y protecciones"
+                    ],
+                    measurements: [
+                        { param: "Corriente máxima", spec: "≤ 120 mA", unit: "mA" },
+                        { param: "Frecuencia baja", spec: "1-150 Hz ±2%", unit: "Hz" },
+                        { param: "Frecuencia media", spec: "2500-10000 Hz ±2%", unit: "Hz" },
+                        { param: "Duración de pulso", spec: "50-400 μs ±5%", unit: "μs" }
+                    ]
+                },
+                correctivo: {
+                    commonSymptoms: [
+                        "Sin salida de corriente",
+                        "Batería no carga",
+                        "Errores de programación",
+                        "Electrodos sin adherencia",
+                        "Pantalla dañada"
+                    ],
+                    diagnosticTools: [
+                        "Multímetro biomédico",
+                        "Osciloscopio",
+                        "Simulador de paciente",
+                        "Resistencias de carga"
+                    ]
+                }
+            },
+            microscopio: {
+                name: "Microscopio Médico",
+                brand: "Olympus",
+                model: "CX41 System Microscope",
+                specialty: "Diagnóstico/Laboratorio",
+                risk: "IIA",
+                location: "Laboratorio/Consulta Especializada",
+                preventivo: {
+                    activities: [
+                        "Limpieza completa del sistema óptico",
+                        "Calibración de objetivos y oculares",
+                        "Verificación de sistema de iluminación",
+                        "Ajuste de condensador y diafragmas",
+                        "Lubricación de mecanismos móviles",
+                        "Verificación de enfoque fino y grueso",
+                        "Limpieza de platina y sujetadores",
+                        "Calibración de magnificaciones"
+                    ],
+                    measurements: [
+                        { param: "Magnificación 4x", spec: "4x ±3%", unit: "x" },
+                        { param: "Magnificación 10x", spec: "10x ±3%", unit: "x" },
+                        { param: "Magnificación 40x", spec: "40x ±3%", unit: "x" },
+                        { param: "Magnificación 100x", spec: "100x ±3%", unit: "x" },
+                        { param: "Resolución óptica", spec: "≤ 0.65 μm", unit: "μm" }
+                    ]
+                },
+                correctivo: {
+                    commonSymptoms: [
+                        "Imagen borrosa",
+                        "Iluminación deficiente",
+                        "Enfoque no funciona",
+                        "Objetivos dañados",
+                        "Condensador desalineado"
+                    ],
+                    diagnosticTools: [
+                        "Patrones de calibración",
+                        "Telescopio dióptico",
+                        "Retículas patrón",
+                        "Luxómetro"
+                    ]
+                }
+            },
+            lampara_hendidura: {
+                name: "Lámpara de Hendidura",
+                brand: "Topcon",
+                model: "SL-D7 Digital Slit Lamp",
+                specialty: "Oftalmología",
+                risk: "IIA",
+                location: "Consultorio Oftalmología",
+                preventivo: {
+                    activities: [
+                        "Calibración del sistema óptico digital",
+                        "Limpieza completa de lentes y espejos",
+                        "Verificación de sistema de iluminación LED",
+                        "Ajuste de controles de magnificación",
+                        "Calibración de hendidura variable",
+                        "Verificación de mentonera y apoyo frontal",
+                        "Prueba de sistema de captura digital",
+                        "Lubricación de mecanismos de movimiento"
+                    ],
+                    measurements: [
+                        { param: "Magnificación 6x", spec: "6x ±5%", unit: "x" },
+                        { param: "Magnificación 10x", spec: "10x ±5%", unit: "x" },
+                        { param: "Magnificación 16x", spec: "16x ±5%", unit: "x" },
+                        { param: "Magnificación 25x", spec: "25x ±5%", unit: "x" },
+                        { param: "Ancho hendidura", spec: "0-12 mm ±0.1", unit: "mm" },
+                        { param: "Intensidad lumínica", spec: "≥ 100000 lux", unit: "lux" }
+                    ]
+                },
+                correctivo: {
+                    commonSymptoms: [
+                        "Iluminación no uniforme",
+                        "Sistema digital no funciona",
+                        "Hendidura no ajusta",
+                        "Magnificación incorrecta",
+                        "Movimientos trabados"
+                    ],
+                    diagnosticTools: [
+                        "Luxómetro",
+                        "Patrones ópticos",
+                        "Herramientas Topcon",
+                        "Software diagnóstico"
+                    ]
+                }
+            }
+        };
+
+        function selectMaintenanceType(type) {
+            selectedMaintenanceType = type;
+            
+            // Actualizar botones
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.closest('.type-btn').classList.add('selected');
+            
+            // Mostrar selector de equipos
+            document.getElementById('equipmentSelector').style.display = 'block';
+            
+            // Actualizar título según tipo
+            const selectorTitle = document.getElementById('selectorTitle');
+            if (type === 'preventivo') {
+                selectorTitle.innerHTML = '🔧 Seleccionar Equipo para Mantenimiento Preventivo';
+            } else {
+                selectorTitle.innerHTML = '🚨 Seleccionar Equipo para Mantenimiento Correctivo';
+            }
+            
+            // Limpiar selección de equipo
+            document.getElementById('equipmentSelect').value = '';
+            document.getElementById('bitacoraContent').style.display = 'none';
+        }
+
+        function loadEquipmentData() {
+            const select = document.getElementById('equipmentSelect');
+            const equipmentKey = select.value;
+            
+            if (!equipmentKey || !selectedMaintenanceType) {
+                return;
+            }
+            
+            selectedEquipment = equipmentKey;
+            const equipment = equipmentDatabase[equipmentKey];
+            
+            // Mostrar información del equipo
+            document.getElementById('equipmentInfo').style.display = 'block';
+            document.getElementById('equipmentName').textContent = equipment.name;
+            document.getElementById('equipmentSpecialty').textContent = equipment.specialty;
+            document.getElementById('equipmentRisk').textContent = equipment.risk;
+            document.getElementById('maintenanceTypeDisplay').textContent = 
+                selectedMaintenanceType === 'preventivo' ? 'PREVENTIVO' : 'CORRECTIVO';
+            
+            // Mostrar contenido de bitácora
+            document.getElementById('bitacoraContent').style.display = 'block';
+            
+            // Cargar formato específico
+            if (selectedMaintenanceType === 'preventivo') {
+                loadPreventivoFormat(equipment);
+            } else {
+                loadCorrectivoFormat(equipment);
+            }
+        }
+
+        function loadPreventivoFormat(equipment) {
+            const today = new Date().toLocaleDateString('es-MX');
+            document.getElementById('docTitle').textContent = 'BITÁCORA DE MANTENIMIENTO PREVENTIVO';
+            
+            const content = `
+                <div class="section">
+                    <div class="section-title">I. IDENTIFICACIÓN DEL EQUIPO MÉDICO</div>
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <span class="form-label">NOMBRE:</span>
+                            <span class="form-input">${equipment.name}</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">MARCA:</span>
+                            <span class="form-input">${equipment.brand}</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">MODELO:</span>
+                            <span class="form-input">${equipment.model}</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">No. SERIE:</span>
+                            <span class="form-input" contenteditable="true">_______________</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">INVENTARIO:</span>
+                            <span class="form-input" contenteditable="true">_______________</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">CLASE RIESGO:</span>
+                            <span class="form-input">${equipment.risk}</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <span class="form-label">UBICACIÓN:</span>
+                        <span class="form-input">${equipment.location}</span>
+                    </div>
+                    <div class="form-row">
+                        <span class="form-label">REG. SANITARIO:</span>
+                        <span class="form-input" contenteditable="true">_______________</span>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">II. DATOS DEL MANTENIMIENTO</div>
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <span class="form-label">FECHA:</span>
+                            <span class="form-input" contenteditable="true">${today}</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">HORA INICIO:</span>
+                            <span class="form-input" contenteditable="true">_______________</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">TÉCNICO:</span>
+                            <span class="form-input" contenteditable="true">_______________</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">HORA FIN:</span>
+                            <span class="form-input" contenteditable="true">_______________</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">CÉDULA PROF.:</span>
+                            <span class="form-input" contenteditable="true">_______________</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">TIPO MANT.:</span>
+                            <span class="form-input" contenteditable="true">Preventivo</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">III. ACTIVIDADES REALIZADAS</div>
+                    <table class="checklist-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60%;">ACTIVIDAD</th>
+                                <th style="width: 15%;">REALIZADO</th>
+                                <th style="width: 25%;">OBSERVACIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${equipment.preventivo.activities.map(activity => `
+                                <tr>
+                                    <td>${activity}</td>
+                                    <td style="text-align: center;"><input type="checkbox" style="transform: scale(1.2);"></td>
+                                    <td contenteditable="true" style="background: #f9f9f9;">_____________</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">IV. MEDICIONES Y PARÁMETROS TÉCNICOS</div>
+                    <table class="checklist-table">
+                        <thead>
+                            <tr>
+                                <th>PARÁMETRO</th>
+                                <th>VALOR MEDIDO</th>
+                                <th>ESPECIFICACIÓN</th>
+                                <th>CUMPLE</th>
+                                <th>OBSERVACIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${equipment.preventivo.measurements.map(measurement => `
+                                <tr>
+                                    <td>${measurement.param}</td>
+                                    <td contenteditable="true" style="background: #f9f9f9; text-align: center;">______</td>
+                                    <td>${measurement.spec}</td>
+                                    <td style="text-align: center;">
+                                        <select style="border: none; background: transparent;">
+                                            <option value="">--</option>
+                                            <option value="si">SÍ ✓</option>
+                                            <option value="no">NO ✗</option>
+                                        </select>
+                                    </td>
+                                    <td contenteditable="true" style="background: #f9f9f9;">_____________</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">V. ESTADO FINAL DEL EQUIPO</div>
+                    <div style="display: flex; gap: 30px; margin: 15px 0;">
+                        <label><input type="radio" name="estado" value="operativo"> ✅ OPERATIVO (Sin restricciones)</label>
+                        <label><input type="radio" name="estado" value="observaciones"> ⚠️ OPERATIVO (Con observaciones)</label>
+                        <label><input type="radio" name="estado" value="fuera"> ❌ FUERA DE SERVICIO</label>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">VI. OBSERVACIONES Y HALLAZGOS</div>
+                    <div style="min-height: 80px; border: 1px solid #ccc; padding: 10px; background: #f9f9f9;" contenteditable="true">
+                        HALLAZGOS: ________________________________<br><br>
+                        ACCIONES REALIZADAS: ________________________________<br><br>
+                        COMPONENTES REEMPLAZADOS: ________________________________
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">VII. VALIDACIÓN Y FIRMAS</div>
+                    <div class="signature-section">
+                        <div class="signature-box">
+                            <div class="signature-title">TÉCNICO RESPONSABLE</div>
+                            <div style="margin: 10px 0;">
+                                Nombre: ________________<br>
+                                Cédula: ________________<br>
+                                Fecha: _________________<br><br>
+                                Firma: _________________
+                            </div>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-title">SUPERVISOR BIOMÉDICO</div>
+                            <div style="margin: 10px 0;">
+                                Nombre: ________________<br>
+                                Cédula: ________________<br>
+                                Fecha: _________________<br><br>
+                                Firma: _________________
+                            </div>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-title">USUARIO FINAL</div>
+                            <div style="margin: 10px 0;">
+                                Nombre: ________________<br>
+                                Cédula: ________________<br>
+                                Fecha: _________________<br><br>
+                                Firma: _________________
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('dynamicContent').innerHTML = content;
+        }
+
+        function loadCorrectivoFormat(equipment) {
+            const today = new Date().toLocaleDateString('es-MX');
+            document.getElementById('docTitle').textContent = 'BITÁCORA DE MANTENIMIENTO CORRECTIVO';
+            
+            const content = `
+                <div class="section">
+                    <div class="section-title correctivo">I. IDENTIFICACIÓN DEL EQUIPO MÉDICO</div>
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <span class="form-label">NOMBRE:</span>
+                            <span class="form-input">${equipment.name}</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">MARCA:</span>
+                            <span class="form-input">${equipment.brand}</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">MODELO:</span>
+                            <span class="form-input">${equipment.model}</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">No. SERIE:</span>
+                            <span class="form-input" contenteditable="true">_______________</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">INVENTARIO:</span>
+                            <span class="form-input" contenteditable="true">_______________</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">USUARIO REPORTA:</span>
+                            <span class="form-input" contenteditable="true">_______________</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <span class="form-label">UBICACIÓN:</span>
+                        <span class="form-input">${equipment.location}</span>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="falla-section">
+                        <div class="section-title correctivo">II. INFORMACIÓN DE LA FALLA</div>
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <span class="form-label">FECHA FALLA:</span>
+                                <span class="form-input" contenteditable="true">${today}</span>
+                            </div>
+                            <div class="form-row">
+                                <span class="form-label">HORA FALLA:</span>
+                                <span class="form-input" contenteditable="true">_______________</span>
+                            </div>
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <strong>PRIORIDAD:</strong><br>
+                            <label><input type="radio" name="prioridad" value="critica"> 🔴 CRÍTICA (Inmediata)</label>
+                            <label><input type="radio" name="prioridad" value="alta"> 🟡 ALTA (24h)</label>
+                            <label><input type="radio" name="prioridad" value="media"> 🟢 MEDIA (72h)</label>
+                            <label><input type="radio" name="prioridad" value="baja"> ⚪ BAJA (1 semana)</label>
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <strong>DESCRIPCIÓN DEL PROBLEMA:</strong><br>
+                            <textarea style="width: 100%; height: 80px; padding: 10px; border: 1px solid #ccc;" 
+                                      placeholder="Describir detalladamente la falla reportada por el usuario..."></textarea>
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <strong>SÍNTOMAS OBSERVADOS:</strong><br>
+                            ${equipment.correctivo.commonSymptoms.map(symptom => `
+                                <label style="display: block; margin: 5px 0;">
+                                    <input type="checkbox"> ${symptom}
+                                </label>
+                            `).join('')}
+                            <label><input type="checkbox"> Otros: <input type="text" style="border-bottom: 1px solid #ccc; margin-left: 10px;"></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="diagnostico-section">
+                        <div class="section-title correctivo">III. DIAGNÓSTICO TÉCNICO</div>
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <span class="form-label">TÉCNICO ASIGNADO:</span>
+                                <span class="form-input" contenteditable="true">_______________</span>
+                            </div>
+                            <div class="form-row">
+                                <span class="form-label">FECHA DIAGNÓSTICO:</span>
+                                <span class="form-input" contenteditable="true">${today}</span>
+                            </div>
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <strong>HERRAMIENTAS DIAGNÓSTICAS UTILIZADAS:</strong><br>
+                            ${equipment.correctivo.diagnosticTools.map(tool => `
+                                <label style="display: inline-block; margin: 5px 15px 5px 0;">
+                                    <input type="checkbox"> ${tool}
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <strong>CAUSA RAÍZ IDENTIFICADA:</strong><br>
+                            <label><input type="radio" name="causa" value="componente"> Componente defectuoso</label>
+                            <label><input type="radio" name="causa" value="desgaste"> Desgaste normal por uso</label>
+                            <label><input type="radio" name="causa" value="operacion"> Error de operación</label>
+                            <label><input type="radio" name="causa" value="mantenimiento"> Falta de mantenimiento preventivo</label>
+                            <label><input type="radio" name="causa" value="ambiental"> Condiciones ambientales adversas</label>
+                            <label><input type="radio" name="causa" value="fabricacion"> Defecto de fabricación</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title correctivo">IV. PLAN DE REPARACIÓN</div>
+                    <div style="margin: 15px 0;">
+                        <strong>ACCIÓN CORRECTIVA REQUERIDA:</strong><br>
+                        <label><input type="checkbox"> Reemplazo de componente(s)</label>
+                        <label><input type="checkbox"> Ajuste/calibración</label>
+                        <label><input type="checkbox"> Reparación de circuito</label>
+                        <label><input type="checkbox"> Actualización de software</label>
+                        <label><input type="checkbox"> Limpieza especializada</label>
+                        <label><input type="checkbox"> Reemplazo completo del equipo</label>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <strong>PARTES Y MATERIALES REQUERIDOS:</strong><br>
+                        <table class="checklist-table">
+                            <thead>
+                                <tr><th>Descripción</th><th>P/N</th><th>Cantidad</th><th>Disponible</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td contenteditable="true">_________________________</td>
+                                    <td contenteditable="true">__________</td>
+                                    <td contenteditable="true">_____</td>
+                                    <td style="text-align: center;"><input type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true">_________________________</td>
+                                    <td contenteditable="true">__________</td>
+                                    <td contenteditable="true">_____</td>
+                                    <td style="text-align: center;"><input type="checkbox"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <span class="form-label">TIEMPO ESTIMADO:</span>
+                            <span class="form-input" contenteditable="true">_______ horas</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">FECHA ESTIMADA:</span>
+                            <span class="form-input" contenteditable="true">___/___/____</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title correctivo">V. REGISTRO DE REPARACIÓN</div>
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <span class="form-label">FECHA/HORA INICIO:</span>
+                            <span class="form-input" contenteditable="true">___/___/____ ____:____</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">FECHA/HORA FIN:</span>
+                            <span class="form-input" contenteditable="true">___/___/____ ____:____</span>
+                        </div>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <strong>PROCEDIMIENTOS DE REPARACIÓN EJECUTADOS:</strong><br>
+                        <textarea style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ccc;" 
+                                  placeholder="Describir paso a paso los procedimientos realizados..."></textarea>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <strong>COMPONENTES REEMPLAZADOS:</strong><br>
+                        <table class="checklist-table">
+                            <thead>
+                                <tr><th>Componente Defectuoso</th><th>P/N</th><th>S/N</th><th>Componente Nuevo</th><th>P/N</th><th>S/N</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td contenteditable="true">_________________</td>
+                                    <td contenteditable="true">_________</td>
+                                    <td contenteditable="true">___________</td>
+                                    <td contenteditable="true">_____________________</td>
+                                    <td contenteditable="true">_________</td>
+                                    <td contenteditable="true">___________</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title correctivo">VI. ESTADO FINAL</div>
+                    <div style="margin: 15px 0;">
+                        <label><input type="radio" name="estadoFinal" value="completada"> ✅ REPARACIÓN COMPLETADA - Equipo retornado a servicio normal</label><br>
+                        <label><input type="radio" name="estadoFinal" value="parcial"> ⚠️ REPARACIÓN PARCIAL - Requiere partes/servicio adicional</label><br>
+                        <label><input type="radio" name="estadoFinal" value="pendiente"> ⏳ PENDIENTE - Esperando partes/autorización/servicio externo</label>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <span class="form-label">TIEMPO FUERA SERVICIO:</span>
+                            <span class="form-input" contenteditable="true">_______ horas/días</span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">COSTO TOTAL:</span>
+                            <span class="form-input" contenteditable="true">$_______</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title correctivo">VII. VALIDACIÓN Y FIRMAS</div>
+                    <div class="signature-section">
+                        <div class="signature-box">
+                            <div class="signature-title">TÉCNICO EJECUTOR</div>
+                            <div style="margin: 10px 0;">
+                                Nombre: ________________<br>
+                                Fecha: _________________<br><br>
+                                Firma: _________________
+                            </div>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-title">SUPERVISOR BIOMÉDICO</div>
+                            <div style="margin: 10px 0;">
+                                Nombre: ________________<br>
+                                Fecha: _________________<br><br>
+                                Firma: _________________
+                            </div>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-title">USUARIO FINAL (RECEPCIÓN)</div>
+                            <div style="margin: 10px 0;">
+                                Nombre: ________________<br>
+                                Fecha: _________________<br><br>
+                                Firma: _________________
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('dynamicContent').innerHTML = content;
+        }
+
+        function printDocument() {
+            window.print();
+        }
+
+        function exportToWord() {
+            if (!selectedEquipment || !selectedMaintenanceType) {
+                alert('Por favor seleccione el tipo de mantenimiento y equipo primero.');
+                return;
+            }
+            
+            const content = document.getElementById('wordDocument').innerHTML;
+            const blob = new Blob([`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Bitácora de Mantenimiento ${selectedMaintenanceType}</title>
+                    <style>
+                        body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; margin: 40px; }
+                        .doc-title { font-size: 18pt; font-weight: bold; text-align: center; }
+                        .section-title { background: #1e3c72; color: white; padding: 8px; font-weight: bold; margin-top: 20px; }
+                        .section-title.correctivo { background: #dc3545; }
+                        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                        th, td { border: 1px solid #ccc; padding: 6px; }
+                        th { background: #e8f4f8; }
+                        .form-row { margin: 5px 0; }
+                        .form-label { font-weight: bold; color: #1e3c72; }
+                        .signature-section { display: flex; justify-content: space-between; margin-top: 30px; }
+                        .signature-box { border: 1px solid #ccc; padding: 15px; width: 30%; text-align: center; }
+                    </style>
+                </head>
+                <body>${content}</body>
+                </html>
+            `], { type: 'application/msword' });
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            const equipment = equipmentDatabase[selectedEquipment];
+            link.download = `Bitacora_${selectedMaintenanceType}_${equipment.name.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.doc`;
+            link.click();
+        }
+
+        function resetForm() {
+            selectedMaintenanceType = '';
+            selectedEquipment = '';
+            
+            // Limpiar selecciones
+            document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('equipmentSelect').value = '';
+            
+            // Ocultar secciones
+            document.getElementById('equipmentSelector').style.display = 'none';
+            document.getElementById('bitacoraContent').style.display = 'none';
+            document.getElementById('equipmentInfo').style.display = 'none';
+            
+            // Limpiar contenido
+            document.getElementById('dynamicContent').innerHTML = `
+                <p style="text-align: center; color: #666; font-style: italic;">
+                    Seleccione el tipo de mantenimiento y equipo para cargar el formato correspondiente
+                </p>
+            `;
+        }
+    </script>
+</body>
+</html>

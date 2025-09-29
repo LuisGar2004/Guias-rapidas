@@ -540,13 +540,14 @@
                     <option value="ultrasonido">Ultrasonido Terapéutico</option>
                     <option value="sillon">Sillón Terapéutico</option>
                     <option value="estimulador">Estimulador Muscular</option>
-                    <option value="microscopio">Microscopio Médico</option>
+                    <option value="microscopio">Microscopio Quirúrgico</option>
                     <option value="lampara_hendidura">Lámpara de Hendidura</option>
                 </select>
                 <button class="generate-btn" onclick="loadEquipmentData()">📋 Cargar Formato</button>
             </div>
             <div class="equipment-management">
                 <button class="add-equipment-btn" onclick="openAddEquipmentModal()">➕ Agregar Nuevo Equipo</button>
+                <button class="add-equipment-btn" onclick="openEditEquipmentModal()" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);">✏️ Editar Equipo</button>
                 <span class="equipment-count" id="equipmentCount">5 equipos registrados</span>
             </div>
         </div>
@@ -630,7 +631,7 @@
                         
                         <!-- MEDICIONES TÉCNICAS -->
                         <div class="form-section">
-                            <h4>📏 Mediciones y Parámetros Técnicos</h4>
+                            <h4>📊 Mediciones y Parámetros Técnicos</h4>
                             <p style="font-size: 11px; color: #666; margin-bottom: 10px;">
                                 Defina los parámetros que se deben medir y verificar
                             </p>
@@ -687,6 +688,97 @@
                 <div class="modal-actions">
                     <button type="button" class="btn-modal btn-cancel" onclick="closeAddEquipmentModal()">Cancelar</button>
                     <button type="button" class="btn-modal btn-save" onclick="saveNewEquipment()">💾 Guardar Equipo</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MODAL EDITAR EQUIPO -->
+        <div id="editEquipmentModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);">
+                    <h3>✏️ Editar Equipo Médico</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-section">
+                        <h4>📋 Seleccionar Equipo a Editar</h4>
+                        <div class="input-field">
+                            <label>Equipo *</label>
+                            <select id="editEquipmentSelect" onchange="loadEquipmentForEdit()" style="width: 100%; padding: 8px; border: 2px solid #e1e5e9; border-radius: 6px;">
+                                <option value="">-- Seleccionar Equipo --</option>
+                                <option value="ultrasonido">Ultrasonido Terapéutico</option>
+                                <option value="sillon">Sillón Terapéutico</option>
+                                <option value="estimulador">Estimulador Muscular</option>
+                                <option value="microscopio">Microscopio Quirúrgico</option>
+                                <option value="lampara_hendidura">Lámpara de Hendidura</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <form id="editEquipmentForm" style="display: none;">
+                        <!-- INFORMACIÓN BÁSICA -->
+                        <div class="form-section">
+                            <h4>📋 Información Básica del Equipo</h4>
+                            <div class="input-group">
+                                <div class="input-field">
+                                    <label>Nombre del Equipo *</label>
+                                    <input type="text" id="editEquipName" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>Marca/Fabricante *</label>
+                                    <input type="text" id="editEquipBrand" required>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field">
+                                    <label>Modelo *</label>
+                                    <input type="text" id="editEquipModel" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>Número de Serie</label>
+                                    <input type="text" id="editEquipSerial">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field">
+                                    <label>Código de Inventario</label>
+                                    <input type="text" id="editEquipInventory" placeholder="Ej: HOSPI-FISIO-201">
+                                </div>
+                                <div class="input-field">
+                                    <label>Especialidad/Área</label>
+                                    <select id="editEquipSpecialty">
+                                        <option value="Cardiología">Cardiología</option>
+                                        <option value="Radiología">Radiología</option>
+                                        <option value="Laboratorio">Laboratorio</option>
+                                        <option value="Fisioterapia/Electroterapia">Fisioterapia/Electroterapia</option>
+                                        <option value="Oftalmología">Oftalmología</option>
+                                        <option value="Otorrinolaringología/Oftalmología">Otorrinolaringología/Oftalmología</option>
+                                        <option value="Cirugía">Cirugía</option>
+                                        <option value="Emergencias">Emergencias</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-field">
+                                    <label>Clase de Riesgo</label>
+                                    <select id="editEquipRisk">
+                                        <option value="I">Clase I (Bajo riesgo)</option>
+                                        <option value="IIA">Clase IIA (Medio riesgo)</option>
+                                        <option value="IIB">Clase IIB (Medio-alto riesgo)</option>
+                                        <option value="III">Clase III (Alto riesgo)</option>
+                                    </select>
+                                </div>
+                                <div class="input-field">
+                                    <label>Ubicación</label>
+                                    <input type="text" id="editEquipLocation" placeholder="Ej: Consultorio 1 - Cardiología">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal btn-cancel" onclick="closeEditEquipmentModal()">Cancelar</button>
+                    <button type="button" class="btn-modal btn-save" onclick="saveEditedEquipment()" style="background: #007bff;">💾 Guardar Cambios</button>
                 </div>
             </div>
         }
@@ -944,6 +1036,7 @@
                 name: name,
                 brand: brand,
                 model: model,
+                serialNumber: 'CUSTOM-' + Date.now(),
                 specialty: document.getElementById('equipSpecialty').value,
                 risk: document.getElementById('equipRisk').value,
                 location: document.getElementById('equipLocation').value || 'Por definir',
@@ -980,10 +1073,135 @@
         
         // Cerrar modal al hacer clic fuera de él
         window.onclick = function(event) {
-            const modal = document.getElementById('addEquipmentModal');
-            if (event.target === modal) {
+            const addModal = document.getElementById('addEquipmentModal');
+            const editModal = document.getElementById('editEquipmentModal');
+            if (event.target === addModal) {
                 closeAddEquipmentModal();
             }
+            if (event.target === editModal) {
+                closeEditEquipmentModal();
+            }
+        }
+        
+        // Abrir modal para editar equipo
+        function openEditEquipmentModal() {
+            document.getElementById('editEquipmentModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Actualizar select con equipos personalizados
+            const select = document.getElementById('editEquipmentSelect');
+            
+            // Limpiar opciones personalizadas anteriores
+            const customOptions = select.querySelectorAll('.custom-option');
+            customOptions.forEach(option => option.remove());
+            
+            // Agregar equipos personalizados
+            Object.keys(customEquipment).forEach(key => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = customEquipment[key].name;
+                option.className = 'custom-option';
+                select.appendChild(option);
+            });
+        }
+        
+        // Cerrar modal de edición
+        function closeEditEquipmentModal() {
+            document.getElementById('editEquipmentModal').style.display = 'none';
+            document.getElementById('editEquipmentForm').style.display = 'none';
+            document.getElementById('editEquipmentSelect').value = '';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Cargar equipo para editar
+        function loadEquipmentForEdit() {
+            const select = document.getElementById('editEquipmentSelect');
+            const equipmentKey = select.value;
+            
+            if (!equipmentKey) {
+                document.getElementById('editEquipmentForm').style.display = 'none';
+                return;
+            }
+            
+            // Buscar equipo en base de datos estándar o personalizada
+            let equipment = equipmentDatabase[equipmentKey] || customEquipment[equipmentKey];
+            
+            if (!equipment) {
+                alert('Error: No se encontró la información del equipo seleccionado.');
+                return;
+            }
+            
+            // Mostrar formulario de edición
+            document.getElementById('editEquipmentForm').style.display = 'block';
+            
+            // Cargar datos en el formulario
+            document.getElementById('editEquipName').value = equipment.name;
+            document.getElementById('editEquipBrand').value = equipment.brand;
+            document.getElementById('editEquipModel').value = equipment.model;
+            document.getElementById('editEquipSerial').value = equipment.serialNumber || '';
+            document.getElementById('editEquipInventory').value = equipment.inventoryCode || '';
+            document.getElementById('editEquipSpecialty').value = equipment.specialty;
+            document.getElementById('editEquipRisk').value = equipment.risk;
+            document.getElementById('editEquipLocation').value = equipment.location;
+        }
+        
+        // Guardar equipo editado
+        function saveEditedEquipment() {
+            const select = document.getElementById('editEquipmentSelect');
+            const equipmentKey = select.value;
+            
+            if (!equipmentKey) {
+                alert('Por favor seleccione un equipo para editar.');
+                return;
+            }
+            
+            // Validar campos requeridos
+            const name = document.getElementById('editEquipName').value.trim();
+            const brand = document.getElementById('editEquipBrand').value.trim();
+            const model = document.getElementById('editEquipModel').value.trim();
+            
+            if (!name || !brand || !model) {
+                alert('Por favor complete los campos obligatorios: Nombre, Marca y Modelo del equipo.');
+                return;
+            }
+            
+            // Determinar si es equipo base o personalizado
+            let equipment;
+            let isBaseEquipment = false;
+            
+            if (equipmentDatabase[equipmentKey]) {
+                // Es un equipo base, actualizar directamente
+                equipment = equipmentDatabase[equipmentKey];
+                isBaseEquipment = true;
+            } else if (customEquipment[equipmentKey]) {
+                // Es un equipo personalizado
+                equipment = customEquipment[equipmentKey];
+            } else {
+                alert('Error: No se encontró el equipo seleccionado.');
+                return;
+            }
+            
+            // Actualizar datos
+            equipment.name = name;
+            equipment.brand = brand;
+            equipment.model = model;
+            equipment.serialNumber = document.getElementById('editEquipSerial').value.trim() || equipment.serialNumber;
+            equipment.inventoryCode = document.getElementById('editEquipInventory').value.trim() || equipment.inventoryCode;
+            equipment.specialty = document.getElementById('editEquipSpecialty').value;
+            equipment.risk = document.getElementById('editEquipRisk').value;
+            equipment.location = document.getElementById('editEquipLocation').value.trim();
+            
+            // Guardar cambios si es equipo personalizado
+            if (!isBaseEquipment) {
+                saveCustomEquipment();
+            }
+            
+            // Actualizar dropdown si cambió el nombre
+            updateEquipmentDropdown();
+            
+            // Cerrar modal y mostrar confirmación
+            closeEditEquipmentModal();
+            alert(`✅ Equipo "${name}" actualizado exitosamente!`);
         }
         
         // Base de datos de equipos
@@ -992,7 +1210,9 @@
                 name: "Ultrasonido Terapéutico",
                 brand: "Chattanooga",
                 model: "Intelect Transport 2782",
-                specialty: "Fisioterapia/Rehabilitación",
+                serialNumber: "CG-MX2-2023-4871",
+                inventoryCode: "HOSPI-FISIO-154",
+                specialty: "Fisioterapia/Electroterapia",
                 risk: "IIA",
                 location: "Fisioterapia - Consultorio 3",
                 preventivo: {
@@ -1024,7 +1244,7 @@
                     ],
                     diagnosticTools: [
                         "Multímetro digital",
-                        "Hidrofón calibrado",
+                        "Hidrófono calibrado",
                         "Osciloscopio",
                         "Medidor de potencia ultrasónica"
                     ]
@@ -1034,7 +1254,9 @@
                 name: "Sillón Terapéutico",
                 brand: "Midmark",
                 model: "641 Procedure Chair",
-                specialty: "Consulta/Procedimientos",
+                serialNumber: "MD-2022-3594",
+                inventoryCode: "HOSPI-OTOFT-089",
+                specialty: "Otorrinolaringología/Oftalmología",
                 risk: "I",
                 location: "Consultorio Oftalmología",
                 preventivo: {
@@ -1074,7 +1296,9 @@
                 name: "Estimulador Muscular",
                 brand: "Compex",
                 model: "SP 4.0 Profesional",
-                specialty: "Fisioterapia/Rehabilitación",
+                serialNumber: "CMPX-2023-7829",
+                inventoryCode: "HOSPI-FISIO-201",
+                specialty: "Fisioterapia/Electroterapia",
                 risk: "IIA",
                 location: "Fisioterapia - Área Electroterapia",
                 preventivo: {
@@ -1112,44 +1336,50 @@
                 }
             },
             microscopio: {
-                name: "Microscopio Médico",
-                brand: "Olympus",
-                model: "CX41 System Microscope",
-                specialty: "Diagnóstico/Laboratorio",
+                name: "Microscopio Quirúrgico",
+                brand: "ZEISS",
+                model: "PENTERO 800 S",
+                serialNumber: "ZS-P800S-2024-1567",
+                inventoryCode: "HOSPI-QUIR-127",
+                specialty: "Otorrinolaringología/Oftalmología",
                 risk: "IIA",
-                location: "Laboratorio/Consulta Especializada",
+                location: "Quirófano Otorrino/Oftalmología",
                 preventivo: {
                     activities: [
-                        "Limpieza completa del sistema óptico",
-                        "Calibración de objetivos y oculares",
-                        "Verificación de sistema de iluminación",
-                        "Ajuste de condensador y diafragmas",
-                        "Lubricación de mecanismos móviles",
-                        "Verificación de enfoque fino y grueso",
-                        "Limpieza de platina y sujetadores",
-                        "Calibración de magnificaciones"
+                        "Calibración del sistema óptico apocromático",
+                        "Limpieza completa de lentes y espejos ZEISS",
+                        "Verificación de sistema Superlux 330 Xenón",
+                        "Prueba de Resolution Enhancer (60% más magnificación)",
+                        "Verificación de distancia de trabajo motorizada (200-625mm)",
+                        "Calibración de magnificaciones 3.4x - 21.3x (hasta 62x)",
+                        "Test de sistema digital 4K 3D integrado",
+                        "Verificación de frenos electromagnéticos AutoBalance"
                     ],
                     measurements: [
-                        { param: "Magnificación 4x", spec: "4x ±3%", unit: "x" },
-                        { param: "Magnificación 10x", spec: "10x ±3%", unit: "x" },
-                        { param: "Magnificación 40x", spec: "40x ±3%", unit: "x" },
-                        { param: "Magnificación 100x", spec: "100x ±3%", unit: "x" },
-                        { param: "Resolución óptica", spec: "≤ 0.65 μm", unit: "μm" }
+                        { param: "Magnificación base", spec: "3.4x - 21.3x ±3%", unit: "x" },
+                        { param: "Resolution Enhancer", spec: "Hasta 62x ±5%", unit: "x" },
+                        { param: "Distancia trabajo", spec: "200-625 mm ±2%", unit: "mm" },
+                        { param: "Resolución óptica", spec: "≥ 120 líneas/mm", unit: "lp/mm" },
+                        { param: "Potencia láser", spec: "< 1mW (635-645nm)", unit: "mW" },
+                        { param: "Consumo eléctrico", spec: "≤ 1200 VA", unit: "VA" }
                     ]
                 },
                 correctivo: {
                     commonSymptoms: [
-                        "Imagen borrosa",
-                        "Iluminación deficiente",
-                        "Enfoque no funciona",
-                        "Objetivos dañados",
-                        "Condensador desalineado"
+                        "Sistema óptico desalineado",
+                        "Resolution Enhancer no funciona",
+                        "Sistema 4K 3D con fallas",
+                        "Distancia trabajo no ajusta",
+                        "Iluminación Xenón intermitente",
+                        "AutoBalance no calibra",
+                        "QEVO Micro-Inspection defectuoso"
                     ],
                     diagnosticTools: [
-                        "Patrones de calibración",
-                        "Telescopio dióptico",
-                        "Retículas patrón",
-                        "Luxómetro"
+                        "Patrones calibración ZEISS",
+                        "Herramientas técnicas ZEISS",
+                        "Software diagnóstico PENTERO",
+                        "Luxómetro calibrado",
+                        "Multímetro biomédico"
                     ]
                 }
             },
@@ -1157,6 +1387,8 @@
                 name: "Lámpara de Hendidura",
                 brand: "Topcon",
                 model: "SL-D7 Digital Slit Lamp",
+                serialNumber: "TP-2023-2148",
+                inventoryCode: "HOSPI-OFTAL-168",
                 specialty: "Oftalmología",
                 risk: "IIA",
                 location: "Consultorio Oftalmología",
@@ -1282,11 +1514,11 @@
                         </div>
                         <div class="form-row">
                             <span class="form-label">No. SERIE:</span>
-                            <span class="form-input" contenteditable="true">_______________</span>
+                            <span class="form-input">${equipment.serialNumber}</span>
                         </div>
                         <div class="form-row">
                             <span class="form-label">INVENTARIO:</span>
-                            <span class="form-input" contenteditable="true">_______________</span>
+                            <span class="form-input">${equipment.inventoryCode}</span>
                         </div>
                         <div class="form-row">
                             <span class="form-label">CLASE RIESGO:</span>
@@ -1464,11 +1696,11 @@
                         </div>
                         <div class="form-row">
                             <span class="form-label">No. SERIE:</span>
-                            <span class="form-input" contenteditable="true">_______________</span>
+                            <span class="form-input">${equipment.serialNumber}</span>
                         </div>
                         <div class="form-row">
                             <span class="form-label">INVENTARIO:</span>
-                            <span class="form-input" contenteditable="true">_______________</span>
+                            <span class="form-input">${equipment.inventoryCode}</span>
                         </div>
                         <div class="form-row">
                             <span class="form-label">USUARIO REPORTA:</span>
@@ -1697,6 +1929,8 @@
             }
             
             const content = document.getElementById('wordDocument').innerHTML;
+            const equipment = equipmentDatabase[selectedEquipment] || customEquipment[selectedEquipment];
+            
             const blob = new Blob([`
                 <!DOCTYPE html>
                 <html>
@@ -1704,17 +1938,130 @@
                     <meta charset="UTF-8">
                     <title>Bitácora de Mantenimiento ${selectedMaintenanceType}</title>
                     <style>
-                        body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; margin: 40px; }
-                        .doc-title { font-size: 18pt; font-weight: bold; text-align: center; }
-                        .section-title { background: #1e3c72; color: white; padding: 8px; font-weight: bold; margin-top: 20px; }
+                        @page {
+                            margin: 1.5cm 1cm 1.5cm 1cm;
+                            size: A4;
+                        }
+                        body { 
+                            font-family: Calibri, Arial, sans-serif; 
+                            font-size: 11pt; 
+                            margin: 0;
+                            padding: 0;
+                            line-height: 1.2;
+                        }
+                        .doc-title { 
+                            font-size: 18pt; 
+                            font-weight: bold; 
+                            text-align: center; 
+                            color: #1e3c72;
+                            margin-bottom: 5px;
+                        }
+                        .doc-subtitle { 
+                            font-size: 12pt; 
+                            color: #666; 
+                            margin: 2px 0; 
+                            text-align: center; 
+                        }
+                        .doc-header { 
+                            text-align: center; 
+                            border-bottom: 3px solid #1e3c72; 
+                            padding-bottom: 10px; 
+                            margin-bottom: 20px; 
+                        }
+                        .section { 
+                            margin-bottom: 20px;
+                            page-break-inside: avoid;
+                        }
+                        .section-title { 
+                            background: #1e3c72; 
+                            color: white; 
+                            padding: 6px 10px; 
+                            font-weight: bold; 
+                            font-size: 12pt; 
+                            margin-bottom: 8px; 
+                        }
                         .section-title.correctivo { background: #dc3545; }
-                        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-                        th, td { border: 1px solid #ccc; padding: 6px; }
-                        th { background: #e8f4f8; }
-                        .form-row { margin: 5px 0; }
-                        .form-label { font-weight: bold; color: #1e3c72; }
-                        .signature-section { display: flex; justify-content: space-between; margin-top: 30px; }
-                        .signature-box { border: 1px solid #ccc; padding: 15px; width: 30%; text-align: center; }
+                        .form-grid { 
+                            display: grid; 
+                            grid-template-columns: 1fr 1fr; 
+                            gap: 10px; 
+                            margin-bottom: 10px; 
+                        }
+                        .form-row { 
+                            display: flex; 
+                            align-items: center; 
+                            gap: 8px; 
+                            margin-bottom: 6px; 
+                        }
+                        .form-label { 
+                            font-weight: bold; 
+                            min-width: 110px; 
+                            color: #1e3c72; 
+                            font-size: 10pt;
+                        }
+                        .form-input { 
+                            flex: 1; 
+                            border-bottom: 1px solid #ccc; 
+                            padding: 1px 3px; 
+                            background: #f9f9f9; 
+                        }
+                        table { 
+                            width: 100%; 
+                            border-collapse: collapse; 
+                            margin: 8px 0; 
+                            font-size: 10pt;
+                        }
+                        th, td { 
+                            border: 1px solid #ccc; 
+                            padding: 4px 6px; 
+                            vertical-align: top;
+                        }
+                        th { 
+                            background: #e8f4f8; 
+                            font-weight: bold;
+                            text-align: center;
+                        }
+                        .signature-section { 
+                            display: grid; 
+                            grid-template-columns: 1fr 1fr 1fr; 
+                            gap: 15px; 
+                            margin-top: 20px;
+                            page-break-inside: avoid;
+                        }
+                        .signature-box { 
+                            border: 1px solid #ccc; 
+                            padding: 10px; 
+                            text-align: center; 
+                            min-height: 70px;
+                            font-size: 9pt;
+                        }
+                        .signature-title { 
+                            font-weight: bold; 
+                            color: #1e3c72; 
+                            margin-bottom: 8px; 
+                            font-size: 10pt;
+                        }
+                        .falla-section, .diagnostico-section { 
+                            padding: 10px; 
+                            border-radius: 6px; 
+                            margin: 10px 0; 
+                        }
+                        .falla-section { 
+                            background: #f8d7da; 
+                            border: 1px solid #f5c6cb; 
+                        }
+                        .diagnostico-section { 
+                            background: #d1ecf1; 
+                            border: 1px solid #bee5eb; 
+                        }
+                        textarea, input, select {
+                            font-family: Calibri, Arial, sans-serif;
+                            font-size: 10pt;
+                        }
+                        label {
+                            font-size: 10pt;
+                            margin: 2px 5px 2px 0;
+                        }
                     </style>
                 </head>
                 <body>${content}</body>
@@ -1723,7 +2070,6 @@
             
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            const equipment = equipmentDatabase[selectedEquipment];
             link.download = `Bitacora_${selectedMaintenanceType}_${equipment.name.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.doc`;
             link.click();
         }
